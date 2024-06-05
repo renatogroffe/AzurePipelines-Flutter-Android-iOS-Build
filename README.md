@@ -1,5 +1,5 @@
 # AzurePipelines-Flutter-Android-iOS-Build
-Exemplo de pipeline para build para Android e iOS de um app Flutter.
+Exemplo de pipeline do Azure DevOps para build de um app Flutter em Android e iOS .
 
 Aplicação utilizada como base:
 
