@@ -1,0 +1,69 @@
+trigger:
+- main
+
+variables:
+  vmImageName: 'macos-latest'
+  projectPath: './src/appgroffe/'
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: BuildAndroid
+  displayName: Build Android
+  jobs:
+  - job: BuildAndroid
+    displayName: Build Android
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - script: sw_vers -productVersion
+      displayName: Exibir a versao atual do macOS
+    - task: JavaToolInstaller@0
+      inputs:
+        versionSpec: '11'
+        jdkArchitectureOption: 'x64'
+        jdkSourceOption: 'PreInstalled'
+      displayName: Configurar uso do Java 11
+    - task: FlutterInstall@0
+      inputs:
+        mode: 'auto'
+        channel: 'stable'
+        version: 'latest'
+      displayName: Instalar o Flutter
+    - script: flutter --version
+      displayName: Exibir a versao instalada do Flutter
+    - script: flutter doctor -v
+      displayName: Informacoes e configuracoes do Flutter
+    - task: FlutterBuild@0
+      inputs:
+        target: 'apk'
+        projectDirectory: '$(projectPath)'
+      displayName: Executar Build para Android
+- stage: BuildIOS
+  displayName: Build iOS
+  dependsOn: BuildAndroid
+  jobs:
+  - job: BuildIOS
+    displayName: Build iOS
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - script: sw_vers -productVersion
+      displayName: Exibir a versao atual do macOS
+    - task: FlutterInstall@0
+      inputs:
+        mode: 'auto'
+        channel: 'stable'
+        version: 'latest'
+      displayName: Instalar o Flutter
+    - script: flutter --version
+      displayName: Exibir a versao instalada do Flutter
+    - script: flutter doctor -v
+      displayName: Informacoes e configuracoes do Flutter
+    - task: FlutterBuild@0
+      inputs:
+        target: 'ios'
+        projectDirectory: '$(projectPath)'
+        iosTargetPlatform: 'simulator'
+      displayName: Executar Build para iOS
