@@ -4,3 +4,7 @@ Exemplo de pipeline do Azure DevOps em ambiente macOS para build de um app Flutt
 Aplicação utilizada como base:
 
 **https://github.com/renatogroffe/Flutter-AppContagemClicks**
+
+---
+
+## Atualizações em 21/02/2024
