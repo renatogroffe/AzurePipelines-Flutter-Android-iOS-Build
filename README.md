@@ -8,3 +8,5 @@ Aplicação utilizada como base:
 ---
 
 ## Atualizações em 21/02/2024
+
+1) Uso do **Java 17** no **pipeline** durante o build para **Android**. 
