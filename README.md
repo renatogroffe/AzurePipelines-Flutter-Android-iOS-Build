@@ -9,4 +9,5 @@ Aplicação utilizada como base:
 
 ## Atualizações em 21/02/2024
 
-1) Uso do **Java 17** no **pipeline** durante o build para **Android**. 
+1) Uso do **Java 17** no **pipeline** durante o build para **Android**.
+2) A aplicação foi atualizada para trabalhar com o **Flutter 3.29.0**.
