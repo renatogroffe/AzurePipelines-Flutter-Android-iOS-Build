@@ -2,7 +2,7 @@ trigger:
 - main
 
 variables:
-  vmImageName: 'macos-latest'
+  vmImageName: 'macos-14'
   projectPath: './src/appgroffe/'
 
 pool:
@@ -17,14 +17,27 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+    - script: |
+        sysctl -n hw.memsize
+        echo ''
+        vm_stat | grep "free"
+      displayName: Exibir informacoes sobre memoria
+    - script: |
+        sysctl -n hw.ncpu
+        echo ''
+        sysctl -a | grep cpu
+      displayName: Exibir informacoes sobre CPU
+    - script: |
+        sysctl -a | grep -E "hw.memsize|hw.ncpu"
+      displayName: Informacoes sobre CPU e memoria
     - script: sw_vers -productVersion
       displayName: Exibir a versao atual do macOS
     - task: JavaToolInstaller@0
       inputs:
-        versionSpec: '11'
+        versionSpec: '17'
         jdkArchitectureOption: 'x64'
         jdkSourceOption: 'PreInstalled'
-      displayName: Configurar uso do Java 11
+      displayName: Configurar uso do Java 17
     - task: FlutterInstall@0
       inputs:
         mode: 'auto'
